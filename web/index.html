@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MessMation</title>
+  <link rel="stylesheet" href="/web/style.css">
+</head>
+
+<body>
+  <main>
+    <header>
+      <span class="badge">MESSMATION!</span>
+      <h1>จากใบเสร็จ เป็นข้อมูล</h1>
+      <p>วางข้อความใบเสร็จ เพื่อเปลี่ยนให้เป็นข้อมูล JSON และตรวจรูปแบบข้อมูล</p>
+    </header>
+    <div class="grid">
+      <section>
+        <h2>กรอกข้อมูลใบเสร็จ</h2>
+        <textarea id="source" maxlength="12000" spellcheck="false" placeholder="กรอกใบเสร็จที่นี่…"></textarea>
+        <div class="actions">
+          <button id="extract" type="button">แปลงข้อมูล</button>
+        </div>
+      </section>
+      <section>
+        <h2>ผลลัพธ์ JSON</h2>
+        <p id="status" role="status" aria-live="polite">รอข้อความต้นฉบับ</p>
+        <pre id="result">ผลลัพธ์จะแสดงที่นี่</pre>
+        <button id="copy" class="secondary" type="button" disabled>คัดลอก JSON</button>
+      </section>
+    </div>
+  </main>
+</body>
+
+</html>
