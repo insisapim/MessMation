@@ -145,3 +145,27 @@ footer {
         padding: 20px
     }
 }
+
+.process-panel {
+    margin-top: 24px;
+}
+
+#run-mode {
+    color: #9a6700;
+    font-weight: 600;
+}
+
+#process-log {
+    max-height: 280px;
+    overflow-y: auto;
+    padding-left: 24px;
+}
+
+#process-log li {
+    padding: 6px 0;
+    line-height: 1.6;
+}
+
+#process-log li[data-level="error"] {
+    color: #b42318;
+}

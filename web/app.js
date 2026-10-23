@@ -12,6 +12,9 @@ const copyButton = document.querySelector("#copy");
 const statusText = document.querySelector("#status");
 const resultBox = document.querySelector("#result");
 
+const processLog = document.querySelector("#process-log");
+const runMode = document.querySelector("#run-mode");
+
 let previewUrl = null;
 
 function resetResult() {
@@ -71,6 +74,9 @@ preview.addEventListener("error", () => {
 extractButton.addEventListener("click", async () => {
     resetResult();
 
+    processLog.replaceChildren();
+    runMode.textContent = "";
+
     const formData = new FormData();
     formData.append("mode", modeInput.value);
 
@@ -102,37 +108,95 @@ extractButton.addEventListener("click", async () => {
     ];
 
     controls.forEach(element => element.disabled = true);
-    statusText.textContent = "กำลังตรวจสอบใบเสร็จ…";
+    copyButton.disabled = true;
+
+    statusText.textContent = "กำลังส่งข้อมูล…";
+    addLog("กำลังส่งข้อมูลไป Backend");
 
     try {
-        const response = await fetch("/api/extract", {
+        const response = await fetch("/api/extract/stream", {
             method: "POST",
             body: formData,
         });
 
-        const data = await response.json();
-
         if (!response.ok) {
-            const message =
-                typeof data.detail === "string"
-                    ? data.detail
-                    : `ข้อมูลไม่ผ่านการตรวจสอบ: HTTP ${response.status}`;
+            const body = await response.json();
 
-            throw new Error(message);
+            throw new Error(
+                typeof body.detail === "string"
+                    ? body.detail
+                    : `คำขอไม่สำเร็จ: HTTP ${response.status}`
+            );
         }
 
-        const labels = {
-            receipt: "AI จัดประเภทว่าเป็นใบเสร็จร้านค้า",
-            not_receipt: "AI จัดประเภทว่าไม่ใช่ใบเสร็จร้านค้า",
-            unclear: "ยังระบุไม่ได้ กรุณาส่งข้อมูลหรือภาพที่ชัดขึ้น",
-        };
+        const contentType = response.headers.get("content-type") || "";
 
-        statusText.textContent = labels[data.document_type];
-        resultBox.textContent = JSON.stringify(data, null, 2);
-        copyButton.disabled = false;
+        if (!contentType.includes("text/event-stream")) {
+            throw new Error("Backend ไม่ได้ส่งข้อมูลแบบ SSE");
+        }
+
+        await readSSE(response, event => {
+            const prefix = event.demo ? "[จำลอง] " : "";
+
+            if (event.demo) {
+                runMode.textContent =
+                    "โหมดจำลอง: ไม่ได้เรียก AI ผลลัพธ์ไม่ใช่ข้อมูลจากเอกสาร";
+            }
+
+            if (event.type === "progress") {
+                addLog(prefix + event.message);
+                statusText.textContent = prefix + event.message;
+            }
+
+            else if (event.type === "result") {
+                const result = event.data;
+
+                if (
+                    result.document_type === "receipt"
+                    && result.data !== null
+                ) {
+                    resultBox.textContent =
+                        JSON.stringify(result.data, null, 2);
+
+                    statusText.textContent = event.demo
+                        ? "แสดงผลจำลองแล้ว"
+                        : "ข้อมูลผ่าน schema แล้ว กรุณาตรวจเทียบกับต้นฉบับ";
+
+                    copyButton.disabled = event.demo;
+                } else {
+                    resultBox.textContent = "";
+                    copyButton.disabled = true;
+
+                    statusText.textContent =
+                        prefix + result.reason;
+                }
+
+                addLog(prefix + "ได้รับผลลัพธ์แล้ว");
+            }
+
+            else if (event.type === "error") {
+                addLog(prefix + event.message, "error");
+
+                statusText.textContent =
+                    "ไม่สำเร็จ: " + event.message;
+
+                resultBox.textContent = "";
+                copyButton.disabled = true;
+            }
+
+            else if (event.type === "done") {
+                addLog(prefix + "จบการทำงาน");
+            }
+        });
 
     } catch (error) {
-        statusText.textContent = `ไม่สำเร็จ: ${error.message}`;
+        addLog(error.message, "error");
+
+        statusText.textContent =
+            `เกิดข้อผิดพลาด: ${error.message}`;
+
+        resultBox.textContent = "";
+        copyButton.disabled = true;
     } finally {
         controls.forEach(element => element.disabled = false);
     }
@@ -146,3 +210,86 @@ copyButton.addEventListener("click", async () => {
         statusText.textContent = "กรุณาเลือกข้อความแล้วคัดลอกด้วยตนเอง";
     }
 });
+
+function addLog(message, level = "info") {
+    const item = document.createElement("li");
+    const time = new Date().toLocaleTimeString("th-TH");
+
+    item.textContent = `[${time}] ${message}`;
+    item.dataset.level = level;
+
+    processLog.appendChild(item);
+    processLog.scrollTop = processLog.scrollHeight;
+}
+
+async function readSSE(response, onEvent) {
+    if (!response.body) {
+        throw new Error("ไม่พบข้อมูล stream");
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    let buffer = "";
+    let completed = false;
+    let receivedOutcome = false;
+
+    function consumeFrames() {
+        while (true) {
+            const separator = /\r?\n\r?\n/.exec(buffer);
+
+            if (!separator) break;
+
+            const frame = buffer.slice(0, separator.index);
+
+            buffer = buffer.slice(
+                separator.index + separator[0].length
+            );
+
+            const data = frame
+                .split(/\r?\n/)
+                .filter(line => line.startsWith("data:"))
+                .map(line => line.slice(5).trimStart())
+                .join("\n");
+
+            if (!data) continue;
+
+            const event = JSON.parse(data);
+
+            if (event.type === "result" || event.type === "error") {
+                receivedOutcome = true;
+            }
+
+            if (event.type === "done") {
+                completed = true;
+            }
+
+            onEvent(event);
+        }
+    }
+
+    try {
+        while (true) {
+            const { value, done } = await reader.read();
+
+            if (done) {
+                buffer += decoder.decode();
+                consumeFrames();
+                break;
+            }
+
+            buffer += decoder.decode(value, { stream: true });
+            consumeFrames();
+        }
+
+        if (!completed || !receivedOutcome || buffer.trim()) {
+            throw new Error("การเชื่อมต่อจบก่อนรับข้อมูลครบ");
+        }
+    } finally {
+        try {
+            await reader.cancel();
+        } finally {
+            reader.releaseLock();
+        }
+    }
+}

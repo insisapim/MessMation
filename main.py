@@ -1,16 +1,17 @@
+import json
+import os
+from fastapi import Depends
+from fastapi.responses import StreamingResponse
+from pipeline import pipeline_events
 from io import BytesIO
 from pathlib import Path
 from typing import Literal
-
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from openai import APIError, APITimeoutError
 from PIL import Image, UnidentifiedImageError
-from pydantic import ValidationError
 
-from llm import MissingConfigError, check_document
-from schemas import DocumentCheck
+from schemas import ExtractionResponse
 
 app = FastAPI()
 
@@ -37,8 +38,7 @@ def home():
     return FileResponse(WEB_DIR / "index.html")
 
 
-@app.post("/api/extract", response_model=DocumentCheck)
-async def extract(
+async def prepare_input(
     mode: Literal["text", "image"] = Form(...),
     text: str = Form(""),
     image: UploadFile | None = File(None),
@@ -72,7 +72,6 @@ async def extract(
         if len(image_bytes) > MAX_IMAGE_BYTES:
             raise HTTPException(413, "ภาพต้องมีขนาดไม่เกิน 5 MiB")
 
-        # ตรวจเนื้อหาไฟล์จริง ไม่เชื่อเพียงนามสกุลหรือ Content-Type
         try:
             with Image.open(BytesIO(image_bytes)) as picture:
                 mime = IMAGE_TYPES.get(picture.format)
@@ -104,39 +103,65 @@ async def extract(
 
         print("[Backend] รับข้อมูลโหมดรูปภาพ")
 
-    try:
-        print("[Backend] กำลังส่งให้ AI ตรวจประเภทเอกสาร")
+    return {
+                "text": text if mode == "text" else None,
+                "image_bytes": image_bytes,
+                "mime": mime,
+            }
 
-        result = await check_document(
-            text=text if mode == "text" else None,
-            image_bytes=image_bytes,
-            mime=mime,
+
+def demo_enabled() -> bool:
+    return (
+        os.getenv("MESSMATION_DEMO", "false").strip().lower()
+        == "true"
+    )
+
+
+@app.post("/api/extract", response_model=ExtractionResponse)
+async def extract_json(payload: dict = Depends(prepare_input)):
+    if demo_enabled():
+        raise HTTPException(
+            status_code=503,
+            detail="ปิด MESSMATION_DEMO ก่อนรัน evaluation",
         )
 
-        print("[Backend] ผลตรวจ:", result.document_type)
+    result = None
+    failure = None
 
-        return result
+    async for event in pipeline_events(**payload):
+        if event["type"] == "result":
+            result = event["data"]
 
-    except MissingConfigError as exc:
+        elif event["type"] == "error":
+            failure = event
+
+    if failure is not None:
         raise HTTPException(
-            503,
-            "กรุณาตั้งค่า API key และ base URL ใน .env",
-        ) from exc
+            status_code=failure["status_code"],
+            detail=failure["message"],
+        )
 
-    except ValidationError as exc:
-        raise HTTPException(
-            502,
-            "AI ตอบกลับผิดรูปแบบ JSON ที่กำหนด",
-        ) from exc
+    if result is None:
+        raise HTTPException(500, "ระบบจบการทำงานโดยไม่มีผลลัพธ์")
 
-    except APITimeoutError as exc:
-        raise HTTPException(
-            504,
-            "AI ใช้เวลานานเกินกำหนด กรุณาลองใหม่",
-        ) from exc
+    return result
 
-    except APIError as exc:
-        raise HTTPException(
-            502,
-            "ติดต่อ AI ไม่สำเร็จ กรุณาตรวจการตั้งค่าและโควตา",
-        ) from exc
+
+@app.post("/api/extract/stream")
+async def extract_stream(payload: dict = Depends(prepare_input)):
+    demo = demo_enabled()
+
+    async def stream():
+        async for event in pipeline_events(**payload, demo=demo):
+            encoded = json.dumps(event, ensure_ascii=False)
+
+            yield f"data: {encoded}\n\n"
+
+    return StreamingResponse(
+        stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
