@@ -1,0 +1,62 @@
+{
+  "summary": {
+    "dataset": "eval\\dev-images.jsonl",
+    "examples": 1,
+    "schema_valid_rate": 1.0,
+    "field_accuracy": 0.6,
+    "document_exact_match": 0.0,
+    "accuracy_by_field": {
+      "merchant_name": 0.0,
+      "receipt_date": 0.0,
+      "total": 1.0,
+      "currency": 1.0,
+      "receipt_number": 1.0
+    },
+    "present_field_accuracy": 0.5,
+    "null_field_accuracy": 1.0,
+    "average_elapsed_seconds": 3.102
+  },
+  "examples": [
+    {
+      "id": "dev-image-001",
+      "mode": "image",
+      "gold": {
+        "merchant_name": "ESDES",
+        "receipt_date": "2015-02-27",
+        "total": 12500.0,
+        "currency": "THB",
+        "receipt_number": null
+      },
+      "prediction": {
+        "merchant_name": "FLOWACCOUNT",
+        "receipt_date": "2025-02-27",
+        "total": 12500.0,
+        "currency": "THB",
+        "receipt_number": null
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": false,
+        "receipt_date": false,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": false,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากการซื้อขายสินค้าหรือบริการ",
+        "data": {
+          "merchant_name": "FLOWACCOUNT",
+          "receipt_date": "2025-02-27",
+          "total": 12500.0,
+          "currency": "THB",
+          "receipt_number": null
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 3.102
+    }
+  ]
+}

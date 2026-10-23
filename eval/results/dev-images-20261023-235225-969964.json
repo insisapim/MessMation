@@ -1,0 +1,46 @@
+{
+  "summary": {
+    "dataset": "eval\\dev-images.jsonl",
+    "examples": 1,
+    "schema_valid_rate": 0.0,
+    "field_accuracy": 0.0,
+    "document_exact_match": 0.0,
+    "accuracy_by_field": {
+      "merchant_name": 0.0,
+      "receipt_date": 0.0,
+      "total": 0.0,
+      "currency": 0.0,
+      "receipt_number": 0.0
+    },
+    "present_field_accuracy": 0.0,
+    "null_field_accuracy": 0.0,
+    "average_elapsed_seconds": 2.056
+  },
+  "examples": [
+    {
+      "id": "dev-image-001",
+      "mode": "image",
+      "gold": {
+        "merchant_name": "ESDES",
+        "receipt_date": "2015-02-27",
+        "total": 12500.0,
+        "currency": "THB",
+        "receipt_number": null
+      },
+      "prediction": null,
+      "schema_valid": false,
+      "field_correct": {
+        "merchant_name": false,
+        "receipt_date": false,
+        "total": false,
+        "currency": false,
+        "receipt_number": false
+      },
+      "exact_match": false,
+      "http_status": null,
+      "response": null,
+      "error": "Request/evaluation failed: ConnectError",
+      "elapsed_seconds": 2.056
+    }
+  ]
+}

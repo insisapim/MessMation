@@ -1,0 +1,185 @@
+{
+  "summary": {
+    "dataset": "eval\\dev-images.jsonl",
+    "examples": 4,
+    "schema_valid_rate": 1.0,
+    "field_accuracy": 0.75,
+    "document_exact_match": 0.25,
+    "accuracy_by_field": {
+      "merchant_name": 0.75,
+      "receipt_date": 1.0,
+      "total": 1.0,
+      "currency": 0.5,
+      "receipt_number": 0.5
+    },
+    "present_field_accuracy": 0.8571428571428571,
+    "null_field_accuracy": 0.5,
+    "average_elapsed_seconds": 3.20775
+  },
+  "examples": [
+    {
+      "id": "dev-image-001",
+      "mode": "image",
+      "gold": {
+        "merchant_name": "ESDES",
+        "receipt_date": "2025-02-27",
+        "total": 12500.0,
+        "currency": "THB",
+        "receipt_number": null
+      },
+      "prediction": {
+        "merchant_name": null,
+        "receipt_date": "2025-02-27",
+        "total": 12500.0,
+        "currency": "THB",
+        "receipt_number": "0105509348"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": false,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": false
+      },
+      "exact_match": false,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากการซื้อขายสินค้าหรือบริการ",
+        "data": {
+          "merchant_name": null,
+          "receipt_date": "2025-02-27",
+          "total": 12500.0,
+          "currency": "THB",
+          "receipt_number": "0105509348"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 6.91
+    },
+    {
+      "id": "dev-image-002",
+      "mode": "image",
+      "gold": {
+        "merchant_name": "HARBOR LANE CAFE",
+        "receipt_date": "2019-11-20",
+        "total": 31.39,
+        "currency": null,
+        "receipt_number": null
+      },
+      "prediction": {
+        "merchant_name": "HARBOR LANE CAFE",
+        "receipt_date": "2019-11-20",
+        "total": 31.39,
+        "currency": "USD",
+        "receipt_number": null
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": false,
+        "receipt_number": true
+      },
+      "exact_match": false,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านอาหาร",
+        "data": {
+          "merchant_name": "HARBOR LANE CAFE",
+          "receipt_date": "2019-11-20",
+          "total": 31.39,
+          "currency": "USD",
+          "receipt_number": null
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.822
+    },
+    {
+      "id": "dev-image-003",
+      "mode": "image",
+      "gold": {
+        "merchant_name": "บริษัท ทดสอบ จำกัด",
+        "receipt_date": "2023-04-04",
+        "total": 155.0,
+        "currency": null,
+        "receipt_number": "0123000086"
+      },
+      "prediction": {
+        "merchant_name": "บริษัท ทดสอบ จำกัด",
+        "receipt_date": "2023-04-04",
+        "total": 155.0,
+        "currency": "THB",
+        "receipt_number": null
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": false,
+        "receipt_number": false
+      },
+      "exact_match": false,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านค้า",
+        "data": {
+          "merchant_name": "บริษัท ทดสอบ จำกัด",
+          "receipt_date": "2023-04-04",
+          "total": 155.0,
+          "currency": "THB",
+          "receipt_number": null
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.474
+    },
+    {
+      "id": "dev-image-004",
+      "mode": "image",
+      "gold": {
+        "merchant_name": "McDonald's",
+        "receipt_date": "2025-11-24",
+        "total": 16.03,
+        "currency": null,
+        "receipt_number": null
+      },
+      "prediction": {
+        "merchant_name": "McDonald's",
+        "receipt_date": "2025-11-24",
+        "total": 16.03,
+        "currency": null,
+        "receipt_number": null
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านอาหาร (McDonald's)",
+        "data": {
+          "merchant_name": "McDonald's",
+          "receipt_date": "2025-11-24",
+          "total": 16.03,
+          "currency": null,
+          "receipt_number": null
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 2.625
+    }
+  ]
+}

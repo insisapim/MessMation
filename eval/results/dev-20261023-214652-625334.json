@@ -1,0 +1,431 @@
+{
+  "summary": {
+    "dataset": "eval\\dev.jsonl",
+    "examples": 10,
+    "schema_valid_rate": 1.0,
+    "field_accuracy": 0.98,
+    "document_exact_match": 0.9,
+    "accuracy_by_field": {
+      "merchant_name": 1.0,
+      "receipt_date": 1.0,
+      "total": 1.0,
+      "currency": 0.9,
+      "receipt_number": 1.0
+    },
+    "present_field_accuracy": 0.9782608695652174,
+    "null_field_accuracy": 1.0,
+    "average_elapsed_seconds": 1.4847000000000001
+  },
+  "examples": [
+    {
+      "id": "dev-001",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านกาแฟตัวอย่าง",
+        "receipt_date": "2026-10-23",
+        "total": 150.0,
+        "currency": "THB",
+        "receipt_number": "R-001"
+      },
+      "prediction": {
+        "merchant_name": "ร้านกาแฟตัวอย่าง",
+        "receipt_date": "2026-10-23",
+        "total": 150.0,
+        "currency": "THB",
+        "receipt_number": "R-001"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านกาแฟที่แสดงรายการซื้อสินค้าและยอดชำระ",
+        "data": {
+          "merchant_name": "ร้านกาแฟตัวอย่าง",
+          "receipt_date": "2026-10-23",
+          "total": 150.0,
+          "currency": "THB",
+          "receipt_number": "R-001"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 2.144
+    },
+    {
+      "id": "dev-002",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านข้าวตัวอย่าง",
+        "receipt_date": "2026-10-22",
+        "total": 70.0,
+        "currency": "THB",
+        "receipt_number": null
+      },
+      "prediction": {
+        "merchant_name": "ร้านข้าวตัวอย่าง",
+        "receipt_date": "2026-10-22",
+        "total": 70.0,
+        "currency": "THB",
+        "receipt_number": null
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านอาหาร",
+        "data": {
+          "merchant_name": "ร้านข้าวตัวอย่าง",
+          "receipt_date": "2026-10-22",
+          "total": 70.0,
+          "currency": "THB",
+          "receipt_number": null
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.374
+    },
+    {
+      "id": "dev-003",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านเครื่องเขียนสายรุ้ง",
+        "receipt_date": "2026-10-23",
+        "total": 120.0,
+        "currency": "THB",
+        "receipt_number": "SR-003"
+      },
+      "prediction": {
+        "merchant_name": "ร้านเครื่องเขียนสายรุ้ง",
+        "receipt_date": "2026-10-23",
+        "total": 120.0,
+        "currency": null,
+        "receipt_number": "SR-003"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": false,
+        "receipt_number": true
+      },
+      "exact_match": false,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านเครื่องเขียน",
+        "data": {
+          "merchant_name": "ร้านเครื่องเขียนสายรุ้ง",
+          "receipt_date": "2026-10-23",
+          "total": 120.0,
+          "currency": null,
+          "receipt_number": "SR-003"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.368
+    },
+    {
+      "id": "dev-004",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านเสื้อผ้าดาว",
+        "receipt_date": "2026-10-20",
+        "total": 450.0,
+        "currency": "THB",
+        "receipt_number": "D-004"
+      },
+      "prediction": {
+        "merchant_name": "ร้านเสื้อผ้าดาว",
+        "receipt_date": "2026-10-20",
+        "total": 450.0,
+        "currency": "THB",
+        "receipt_number": "D-004"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านเสื้อผ้า",
+        "data": {
+          "merchant_name": "ร้านเสื้อผ้าดาว",
+          "receipt_date": "2026-10-20",
+          "total": 450.0,
+          "currency": "THB",
+          "receipt_number": "D-004"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.364
+    },
+    {
+      "id": "dev-005",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านอุปกรณ์บ้านดี",
+        "receipt_date": "2026-10-19",
+        "total": 214.0,
+        "currency": "THB",
+        "receipt_number": "BD-005"
+      },
+      "prediction": {
+        "merchant_name": "ร้านอุปกรณ์บ้านดี",
+        "receipt_date": "2026-10-19",
+        "total": 214.0,
+        "currency": "THB",
+        "receipt_number": "BD-005"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านค้า",
+        "data": {
+          "merchant_name": "ร้านอุปกรณ์บ้านดี",
+          "receipt_date": "2026-10-19",
+          "total": 214.0,
+          "currency": "THB",
+          "receipt_number": "BD-005"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.612
+    },
+    {
+      "id": "dev-006",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านขนมละมุน",
+        "receipt_date": null,
+        "total": 65.0,
+        "currency": "THB",
+        "receipt_number": "LM-006"
+      },
+      "prediction": {
+        "merchant_name": "ร้านขนมละมุน",
+        "receipt_date": null,
+        "total": 65.0,
+        "currency": "THB",
+        "receipt_number": "LM-006"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านขนม",
+        "data": {
+          "merchant_name": "ร้านขนมละมุน",
+          "receipt_date": null,
+          "total": 65.0,
+          "currency": "THB",
+          "receipt_number": "LM-006"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.221
+    },
+    {
+      "id": "dev-007",
+      "mode": "text",
+      "gold": {
+        "merchant_name": null,
+        "receipt_date": "2026-10-18",
+        "total": 40.0,
+        "currency": "THB",
+        "receipt_number": "RC-007"
+      },
+      "prediction": {
+        "merchant_name": null,
+        "receipt_date": "2026-10-18",
+        "total": 40.0,
+        "currency": "THB",
+        "receipt_number": "RC-007"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินที่มีรายการสินค้าและยอดรวมการซื้อขาย",
+        "data": {
+          "merchant_name": null,
+          "receipt_date": "2026-10-18",
+          "total": 40.0,
+          "currency": "THB",
+          "receipt_number": "RC-007"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.356
+    },
+    {
+      "id": "dev-008",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านของใช้มุมบ้าน",
+        "receipt_date": "2026-10-17",
+        "total": 180.0,
+        "currency": null,
+        "receipt_number": "MB-008"
+      },
+      "prediction": {
+        "merchant_name": "ร้านของใช้มุมบ้าน",
+        "receipt_date": "2026-10-17",
+        "total": 180.0,
+        "currency": null,
+        "receipt_number": "MB-008"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านค้า",
+        "data": {
+          "merchant_name": "ร้านของใช้มุมบ้าน",
+          "receipt_date": "2026-10-17",
+          "total": 180.0,
+          "currency": null,
+          "receipt_number": "MB-008"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.373
+    },
+    {
+      "id": "dev-009",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "Sunny Books",
+        "receipt_date": "2026-10-16",
+        "total": 14.75,
+        "currency": "USD",
+        "receipt_number": "SB-009"
+      },
+      "prediction": {
+        "merchant_name": "Sunny Books",
+        "receipt_date": "2026-10-16",
+        "total": 14.75,
+        "currency": "USD",
+        "receipt_number": "SB-009"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านหนังสือ",
+        "data": {
+          "merchant_name": "Sunny Books",
+          "receipt_date": "2026-10-16",
+          "total": 14.75,
+          "currency": "USD",
+          "receipt_number": "SB-009"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.557
+    },
+    {
+      "id": "dev-010",
+      "mode": "text",
+      "gold": {
+        "merchant_name": "ร้านเครื่องใช้ไฟฟ้าแสงทอง",
+        "receipt_date": "2026-10-15",
+        "total": 1290.5,
+        "currency": "THB",
+        "receipt_number": "000010"
+      },
+      "prediction": {
+        "merchant_name": "ร้านเครื่องใช้ไฟฟ้าแสงทอง",
+        "receipt_date": "2026-10-15",
+        "total": 1290.5,
+        "currency": "THB",
+        "receipt_number": "000010"
+      },
+      "schema_valid": true,
+      "field_correct": {
+        "merchant_name": true,
+        "receipt_date": true,
+        "total": true,
+        "currency": true,
+        "receipt_number": true
+      },
+      "exact_match": true,
+      "http_status": 200,
+      "response": {
+        "document_type": "receipt",
+        "reason": "เป็นใบเสร็จรับเงินจากร้านค้า",
+        "data": {
+          "merchant_name": "ร้านเครื่องใช้ไฟฟ้าแสงทอง",
+          "receipt_date": "2026-10-15",
+          "total": 1290.5,
+          "currency": "THB",
+          "receipt_number": "000010"
+        }
+      },
+      "error": null,
+      "elapsed_seconds": 1.478
+    }
+  ]
+}

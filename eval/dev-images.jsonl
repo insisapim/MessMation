@@ -1,0 +1,4 @@
+{"id":"dev-image-001","mode":"image","image":"images/dev-image-001.jpg","gold":{"merchant_name":"ESDES","receipt_date":"2025-02-27","total":12500,"currency":"THB","receipt_number":null}}
+{"id":"dev-image-002","mode":"image","image":"images/dev-image-002.jpg","gold":{"merchant_name":"HARBOR LANE CAFE","receipt_date":"2019-11-20","total":31.39,"currency":null,"receipt_number":null}}
+{"id":"dev-image-003","mode":"image","image":"images/dev-image-003.png","gold":{"merchant_name":"บริษัท ทดสอบ จำกัด","receipt_date":"2023-04-04","total":155,"currency":null,"receipt_number":"0123000086"}}
+{"id":"dev-image-004","mode":"image","image":"images/dev-image-004.png","gold":{"merchant_name":"McDonald's","receipt_date":"2025-11-24","total":16.03,"currency":null,"receipt_number":null}}

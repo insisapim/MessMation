@@ -144,12 +144,53 @@ Rules:
 5. For total, use the final payable amount after discounts and taxes.
    Do not use cash tendered, change, or an intermediate subtotal.
 6. Do not calculate a missing final total.
-7. Convert an explicitly identified Thai Buddhist Era year to
-   Gregorian by subtracting 543. If the date is ambiguous, use null.
-8. Use THB when the receipt explicitly indicates Thai baht.
-   Do not infer currency solely from the language.
+7. Normalize receipt_date to Gregorian YYYY-MM-DD:
+   - Identify the day, month, and year from the source separately.
+   - Preserve the original day and month. Never change them when
+     converting the calendar year.
+   - For an explicitly identified Thai Buddhist Era year,
+     subtract 543 from the year only.
+   - For contemporary Thai retail receipts, interpret a four-digit
+     year in the 25xx range as Buddhist Era.
+   - For slash-separated dates, use explicit format labels when
+     available. Without a label, a first component greater than 12
+     identifies the day in DD/MM/YYYY.
+   - If the date order or calendar remains ambiguous, return null.
+   - Before returning, verify that the normalized day and month
+     match the source and that the resulting date is valid.
+8. Determine currency only from explicit evidence associated with
+   the receipt's transaction amounts:
+   - "บาท", "฿", or "THB" indicates "THB".
+   - "USD" or "US$" indicates "USD".
+   - For other currencies, return the corresponding three-letter
+     code only when the evidence identifies the currency clearly.
+   - A bare "$" symbol is ambiguous; do not assume it means USD.
+   - If no explicit currency evidence is present, return null.
+   - Never infer currency from the document's language, store name,
+     address, or presumed country.
+   - Evaluate each field independently. A missing merchant name
+     does not make an explicitly stated currency unknown.
 9. Return a JSON number for total, without a currency symbol.
 10. Do not include markdown, explanations, or extra keys.
+Image-specific rules:
+- Identify the receipt's boundaries before extracting information.
+- For merchant_name, use the seller or issuer identified inside
+  the receipt. Do not use a customer or buyer name.
+- Do not treat surrounding page branding, watermarks, or software
+  provider logos as the merchant unless the receipt explicitly
+  identifies that organization as the seller.
+- Read handwritten dates digit by digit. Preserve the written
+  Gregorian year; do not replace it with the current year or
+  a more recent year.
+- Apply the Buddhist Era conversion rules only when appropriate.
+- If the seller name or date cannot be read reliably, return null.
+Receipt number rules:
+- Extract receipt_number only from a field explicitly identifying
+  the receipt or document number, such as "Receipt No.",
+  "Document No.", "เลขที่ใบเสร็จ", or the receipt header's "เลขที่".
+- Do not substitute a tax ID, phone number, customer ID,
+  address number, or book number for the receipt number.
+- If the receipt-number field is blank, return null.
 """
 
 

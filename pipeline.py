@@ -1,10 +1,11 @@
 import asyncio
-
+import os
 from openai import APIError, APITimeoutError
 from pydantic import ValidationError
 
 from llm import MissingConfigError, check_document, extract_receipt
 from schemas import DocumentCheck, ExtractionResponse, ReceiptData
+from receipt_agent import extract_receipt_agent
 
 
 async def pipeline_events(
@@ -81,7 +82,23 @@ async def pipeline_events(
                     receipt_number="DEMO-001",
                 )
             else:
-                receipt = await extract_receipt(
+                use_agent = (
+                    os.getenv("MESSMATION_AGENT", "false")
+                    .strip()
+                    .lower()
+                    == "true"
+                )
+
+                if use_agent:
+                    yield event(
+                        "progress",
+                        message="กำลังแปลงข้อมูลด้วย AI และเครื่องมือตรวจรูปแบบ",
+                    )
+                    extractor = extract_receipt_agent
+                else:
+                    extractor = extract_receipt
+
+                receipt = await extractor(
                     text=text,
                     image_bytes=image_bytes,
                     mime=mime,
