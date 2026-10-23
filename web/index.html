@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MessMation</title>
+
   <link rel="stylesheet" href="/web/style.css">
 </head>
 
@@ -15,22 +16,50 @@
       <h1>จากใบเสร็จ เป็นข้อมูล</h1>
       <p>วางข้อความใบเสร็จ เพื่อเปลี่ยนให้เป็นข้อมูล JSON และตรวจรูปแบบข้อมูล</p>
     </header>
+
     <div class="grid">
       <section>
-        <h2>กรอกข้อมูลใบเสร็จ</h2>
-        <textarea id="source" maxlength="12000" spellcheck="false" placeholder="กรอกใบเสร็จที่นี่…"></textarea>
+        <h2>นำเข้าข้อมูลใบเสร็จ</h2>
+
+        <label for="mode">รูปแบบข้อมูล</label>
+        <select id="mode">
+          <option value="text">กรอกข้อความ</option>
+          <option value="image">อัปโหลดรูปภาพ</option>
+        </select>
+
+        <div id="text-panel">
+          <textarea id="source" maxlength="12000" spellcheck="false" aria-label="ข้อความใบเสร็จ"
+            placeholder="กรอกข้อความใบเสร็จที่นี่…"></textarea>
+        </div>
+
+        <div id="image-panel" hidden>
+          <p>รองรับ JPEG, PNG และ WebP ขนาดไม่เกิน 5 MiB</p>
+
+          <input id="image" type="file" accept="image/jpeg,image/png,image/webp" aria-label="เลือกรูปใบเสร็จ">
+
+          <img id="preview" alt="ตัวอย่างภาพที่เลือก" hidden
+            style="max-width: 100%; max-height: 320px; margin-top: 16px;">
+        </div>
+
         <div class="actions">
-          <button id="extract" type="button">แปลงข้อมูล</button>
+          <button id="extract" type="button">
+            ตรวจสอบใบเสร็จ
+          </button>
         </div>
       </section>
+
       <section>
         <h2>ผลลัพธ์ JSON</h2>
         <p id="status" role="status" aria-live="polite">รอข้อความต้นฉบับ</p>
         <pre id="result">ผลลัพธ์จะแสดงที่นี่</pre>
-        <button id="copy" class="secondary" type="button" disabled>คัดลอก JSON</button>
+
+        <button id="copy" class="secondary" type="button" disabled>
+          คัดลอก JSON
+        </button>
       </section>
     </div>
   </main>
+  <script src="/web/app.js" defer></script>
 </body>
 
 </html>
