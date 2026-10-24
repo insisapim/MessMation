@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: messmation
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        sync: false
+      - key: MESSMATION_AGENT
+        value: "true"
+      - key: MESSMATION_DEMO
+        value: "false"

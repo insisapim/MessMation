@@ -13,7 +13,7 @@ from PIL import Image, UnidentifiedImageError
 
 from schemas import ExtractionResponse
 
-app = FastAPI()
+app = FastAPI(title="MessMation", version="1.0.0")
 
 BASE_DIR = Path(__file__).resolve().parent
 WEB_DIR = BASE_DIR / "web"
@@ -36,6 +36,12 @@ app.mount(
 @app.get("/")
 def home():
     return FileResponse(WEB_DIR / "index.html")
+
+
+@app.get("/healthz", include_in_schema=False)
+def health():
+    """Process health only; does not call or verify the LLM service."""
+    return {"status": "ok"}
 
 
 async def prepare_input(

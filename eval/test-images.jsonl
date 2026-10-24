@@ -1,0 +1,15 @@
+{"id":"test-image-001","mode":"image","image":"images/test/dev-images-001.webp","gold":{"merchant_name":"RONA","receipt_date":"2025-11-25","total":44.46,"currency":null,"receipt_number":null}}
+{"id":"test-image-002","mode":"image","image":"images/test/dev-images-002.webp","gold":{"merchant_name":"Joe's Diner","receipt_date":"2024-04-05","total":45,"currency":null,"receipt_number":null}}
+{"id":"test-image-003","mode":"image","image":"images/test/dev-images-003.png","gold":{"merchant_name":"HEALTH PHARMACY","receipt_date":"2026-03-18","total":21.98,"currency":null,"receipt_number":null}}
+{"id":"test-image-004","mode":"image","image":"images/test/dev-images-004.png","gold":{"merchant_name":"ARTGROUP T-Shirt Emporium","receipt_date":"2025-06-26","total":79.40,"currency":null,"receipt_number":"#0000001"}}
+{"id":"test-image-005","mode":"image","image":"images/test/dev-images-005.jpg","gold":{"merchant_name":"SUPERMARKET","receipt_date":null,"total":null,"currency":null,"receipt_number":null}}
+{"id":"test-image-007","mode":"image","image":"images/test/dev-images-007.jpg","gold":{"merchant_name":"East Repair Inc.","receipt_date":null,"total":154.06,"currency":null,"receipt_number":"US-001"}}
+{"id":"test-image-008","mode":"image","image":"images/test/dev-images-008.webp","gold":{"merchant_name":"YOUR RESTAURANT","receipt_date":"2026-06-17","total":707.70,"currency":"INR","receipt_number":"SKB/25-05/0142"}}
+{"id":"test-image-009","mode":"image","image":"images/test/dev-images-009.png","gold":{"merchant_name":"Apple Store, Fifth Avenue","receipt_date":"2026-03-18","total":1564.53,"currency":null,"receipt_number":null}}
+{"id":"test-image-010","mode":"image","image":"images/test/dev-images-010.webp","gold":{"merchant_name":"Wendy’s #503","receipt_date":"2024-11-21","total":15.80,"currency":null,"receipt_number":null}}
+{"id":"test-image-011","mode":"image","image":"images/test/dev-images-011.webp","gold":{"merchant_name":"Family Dollar","receipt_date":"2025-11-24","total":44.46,"currency":null,"receipt_number":null}}
+{"id":"test-image-012","mode":"image","image":"images/test/dev-images-012.webp","gold":{"merchant_name":"KFC","receipt_date":"2024-11-21","total":15.88,"currency":null,"receipt_number":null}}
+{"id":"test-image-013","mode":"image","image":"images/test/dev-images-013.jpg","gold":{"merchant_name":"FUEL","receipt_date":null,"total":54.89,"currency":null,"receipt_number":"22050"}}
+{"id":"test-image-014","mode":"image","image":"images/test/dev-images-014.jpg","gold":{"merchant_name":"BRIGHT MART","receipt_date":"2026-02-12","total":87,"currency":null,"receipt_number":"RCP-602371"}}
+{"id":"test-image-016","mode":"image","image":"images/test/dev-images-016.png","gold":{"merchant_name":"The Home Depot","receipt_date":"2026-03-18","total":180.52,"currency":null,"receipt_number":null}}
+{"id":"test-image-017","mode":"image","image":"images/test/dev-images-017.jpg","gold":{"merchant_name":"บริษัท ร้านอาหาร จำกัด","receipt_date":"2023-03-14","total":1583,"currency":null,"receipt_number":"ST1-67-0119-00001"}}

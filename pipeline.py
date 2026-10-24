@@ -124,7 +124,7 @@ async def pipeline_events(
         yield event(
             "error",
             status_code=503,
-            message="กรุณาตั้งค่า API key และ base URL ใน .env",
+            message="ยังไม่ได้ตั้งค่าบริการ AI บนเซิร์ฟเวอร์",
         )
 
     except ValidationError:

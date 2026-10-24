@@ -9,26 +9,7 @@ from schemas import DocumentCheck, ReceiptData
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
-from dotenv import dotenv_values
-from urllib.parse import urlsplit
 
-env_file = BASE_DIR / ".env"
-file_values = dotenv_values(env_file)
-
-active_url = os.getenv("OPENAI_BASE_URL", "").strip()
-file_url = (file_values.get("OPENAI_BASE_URL") or "").strip()
-
-parsed_url = urlsplit(active_url)
-
-print("[CONFIG] .env exists:", env_file.is_file())
-print("[CONFIG] URL matches .env:", active_url == file_url)
-print("[CONFIG] URL scheme:", parsed_url.scheme)
-print("[CONFIG] URL host:", parsed_url.hostname)
-print("[CONFIG] URL path:", parsed_url.path)
-print(
-    "[CONFIG] API key configured:",
-    bool(os.getenv("OPENAI_API_KEY", "").strip()),
-)
 
 class MissingConfigError(Exception):
     pass
