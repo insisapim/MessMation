@@ -5,7 +5,7 @@
 โปรเจกต์รายวิชา Special Topics in Information Technology 3: Building Large Language Model Powered Applications
 
 - Repository: https://github.com/insisapim/MessMation
-- Live app: **ยังไม่ได้เผยแพร่ — เพิ่ม URL จริงหลัง deploy และทดสอบบน Render สำเร็จ**
+- Live app: https://messmation.onrender.com/
 - ผลการทดลองที่บันทึกไว้: ข้อความ 15 ตัวอย่าง + ภาพ 15 ตัวอย่าง; ความถูกต้องรายฟิลด์รวม 85.33% → 90.67% เมื่อใช้ agent ในการทดลองครั้งนี้
 
 ## ปัญหาและผู้ใช้
